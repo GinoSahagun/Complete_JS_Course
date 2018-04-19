@@ -1,25 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Asynchronous JavaScript</title>
 </head>
+
 <body>
     <h1>Asynchronous JavaScript</h1>
     <script>
-        const first = () => {
-            console.log('Hey there');
-            second();
-            console.log('The End');
+        // example of a async call
+        // const first = () => {
+        //     console.log('Hey there');
+        //     second();
+        //     console.log('The End');
+        // }
+        // const second = () => {
+        //     setTimeout(() => {
+        //         console.log('Async Hey there');    
+        //     }, 2000);
+        // }
+        // first();
+
+        // Call Back Hell Not best Practice anymore
+        // function getRecipe(){
+        //     setTimeout(()=> {
+        //         const recipeID = [543, 452, 523, 5234];
+        //         console.log(recipeID);
+
+        //         setTimeout((id) => {
+        //             const recipe = {
+        //                 title: 'fresh tomato paste',
+        //                 publisher: 'Joe Ripper'
+        //             };
+
+        //             console.log(`${id}: ${recipe.title} `);
+
+        //         }, 1000, recipeID[2]);
+
+        //     }, 1500);
+        // }
+        // getRecipe();
+
+        // const getIds = new Promise((resolve, reject) => {
+        //     setTimeout(() => {
+        //         resolve([543, 452, 523, 5234]);
+        //     }, 1000);
+        // });
+
+        // getIds
+        //     .then((IDs) => {
+        //         console.log(IDs);
+        //     })
+
+        // Promises Introduced
+        //     const getRecipe = (recId) => {
+        //         return new Promise((resolve, reject) => {
+
+        //                 setTimeout((id) => {
+        //                     const recipe = {
+        //                         title: 'fresh tomato paste',
+        //                         publisher: 'Joe Ripper'
+        //                     };
+
+        //                     resolve(`${id}: ${recipe.title} `);
+
+        //                 }, 1000, recId);
+
+        //             });
+        //     }
+
+        //     // const promise = getRecipe(3);
+        //     // promise.then(desc => {
+        //     //     console.log(desc);
+        //     // })
+
+        //     async function getRecipesAW() {
+        //         const IDs = await getIds;
+        //         console.log(IDs);
+        //         const recipe = await getRecipe(2);
+        //         console.log(recipe);
+        //         return recipe;
+        //     }
+        //    getRecipesAW().then(rec => {
+        //        console.log(rec);
+        //    });
+
+        function getWeatherAW(woeid) {
+            fetch(`https://crossorigin.me/https://www.metaweather.com/api/location/${woeid}/`)
+                .then((result) => {
+                    console.log(result);
+                    return result.json();
+                })
+                .then(data => {
+                    console.log(data);
+                })
+                .catch(err => {
+                    console.log(err);
+                });
         }
-        const second = () => {
-            setTimeout(() => {
-                console.log('Async Hey there');    
-            }, 2000);
+        getWeatherAW(44418);
+
+        async function getWeatherAsync (woeid){
+            const result = await fetch(`https://crossorigin.me/https://www.metaweather.com/api/location/${woeid}/`);
+            const data = result.json();
+            console.log(data);
         }
-        first();
+        getWeatherAsync(44418);
+
     </script>
 </body>
+
 </html>
